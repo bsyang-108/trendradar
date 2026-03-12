@@ -745,11 +745,11 @@ def generate_html():
             </div>
             <div class="ai-grid">
                 <div class="ai-block">
-                    <div class="ai-block-title"><span class="emoji">📊</span>核心内容</div>
+                    <div class="ai-block-title"><span class="emoji">📊</span>AI 技术核心内容</div>
                     <div class="ai-block-content">{ai_content.get('core_trends', '')}</div>
                 </div>
                 <div class="ai-block">
-                    <div class="ai-block-title"><span class="emoji">🏢</span>关键动态</div>
+                    <div class="ai-block-title"><span class="emoji">🏢</span>技术公司关键动态</div>
                     <div class="ai-block-content">{ai_content.get('signals', '')}</div>
                 </div>
                 <div class="ai-block">
@@ -757,7 +757,7 @@ def generate_html():
                     <div class="ai-block-content">{ai_content.get('outlook_strategy', '')}</div>
                 </div>
                 <div class="ai-block">
-                    <div class="ai-block-title"><span class="emoji">💡</span>技术应用</div>
+                    <div class="ai-block-title"><span class="emoji">💡</span>中东热点关注</div>
                     <div class="ai-block-content">{ai_content.get('rss_insights', '')}</div>
                 </div>
             </div>
@@ -828,8 +828,9 @@ def generate_html():
     
     html += '''
         <footer class="footer">
-            由 <strong>TrendRadar</strong> 生成 · 
-            <a href="https://github.com/sansan0/TrendRadar" target="_blank" class="footer-link">GitHub 开源项目</a>
+            由 信息技术中心 数据运营部 提供
+            <!-- 由 <strong>TrendRadar</strong> 生成 · 
+            <a href="https://github.com/sansan0/TrendRadar" target="_blank" class="footer-link">GitHub 开源项目</a> -->
         </footer>
     </div>
 </body>

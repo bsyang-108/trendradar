@@ -14,9 +14,9 @@ def fix_html_structure(html_content):
     
     # 标题映射
     title_mapping = {
-        "核心热点态势": "📊 核心内容",
-        "异动与弱信号": "🏢 关键动态",
-        "RSS 深度洞察": "💡 技术应用",
+        "核心热点态势": "📊 AI核心内容",
+        "异动与弱信号": "🏢 技术公司动态",
+        "RSS 深度洞察": "💡 中东热点关注",
         "研判策略建议": "⚠️ 政策风险"
     }
     
@@ -43,7 +43,7 @@ def fix_html_structure(html_content):
     
     if len(blocks) >= 4:
         # 按用户要求的顺序重新排列
-        desired_order = ["📊 核心内容", "🏢 关键动态", "⚠️ 政策风险", "💡 技术应用"]
+        desired_order = ["📊 AI核心内容", "🏢 技术公司动态", "⚠️ 政策风险", "💡 中东热点关注"]
         
         # 创建标题到内容的映射
         block_map = {}

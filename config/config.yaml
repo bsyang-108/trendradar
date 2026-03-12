@@ -1,22 +1,29 @@
-# AI配置
 ai:
-  model: "bailian/glm-5"
+  model: "moonshot/kimi-k2-thinking-turbo"
   api_key: ""
   api_base: ""
   timeout: 120
   temperature: 0.7
   max_tokens: 2000
   num_retries: 2
+  fallback_models: []
 
-# AI分析配置
 ai_analysis:
   enabled: true
   language: "Chinese"
   prompt_file: "ai_analysis_prompt.txt"
   mode: "follow_report"
   max_news_for_analysis: 50
+  include_rss: true
+  include_standalone: true
+  include_rank_timeline: false
 
-# 平台配置
+ai_translation:
+  enabled: false
+  prompt_file: "ai_translation_prompt.txt"
+  language: "Chinese"
+  max_batch_size: 10
+
 platforms:
   enabled: true
   sources:
@@ -42,43 +49,32 @@ platforms:
       name: 澎湃新闻
       enabled: true
     - id: 36kr
-      name: 36氪
+      name: 36 氪
       enabled: true
 
-# RSS配置
-rss:
-  enabled: true
-  feeds:
-    - id: jiqizhixin
-      name: 机器之心
-      url: https://www.jiqizhixin.com/rss
-      enabled: true
-    - id: 36kr-ai
-      name: 36氪 - AI
-      url: https://rsshub.rssforever.com/36kr/motif/327686782977
-      enabled: true
-    - id: liangziwei 
-      name: 量子位
-      url: https://www.qbitai.com/feed
-      enabled: true
-
-
-#    - id: hacker-news
-#      name: Hacker News
-#      url: https://hnrss.org/frontpage
-#      enabled: true
-
-# 通知配置
 notification:
   batch_size:
     feishu: 30000
+  batch_send_interval: 3
 
-# 报告配置
 report:
   mode: "daily"
+  template: null
+  custom_template_path: ""
   time_range: "24h"
 
-# 调度配置 - 使用 custom 模板
 schedule:
   enabled: false
-  preset: "custom"
+  preset: "always_on"
+
+display:
+  region_order:
+    - hotlist
+    - ai_analysis
+    - rss
+  regions:
+    hotlist: true
+    new_items: false
+    rss: true
+    standalone: false
+    ai_analysis: true
