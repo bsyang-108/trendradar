@@ -1,0 +1,52 @@
+ai:
+  model: "moonshot/kimi-k2-thinking-turbo"
+  api_key: ""
+  api_base: ""
+  timeout: 120
+  temperature: 0.7
+  max_tokens: 2000
+  num_retries: 2
+  fallback_models: []
+
+ai_analysis:
+  enabled: true
+  language: "Chinese"
+  prompt_file: "ai_analysis_prompt.txt"
+  mode: "follow_report"
+  max_news_for_analysis: 50
+  include_rss: false
+  include_standalone: true
+  include_rank_timeline: false
+
+ai_translation:
+  enabled: false
+  prompt_file: "ai_translation_prompt.txt"
+  language: "Chinese"
+  max_batch_size: 10
+
+notification:
+  batch_size:
+    feishu: 30000
+  batch_send_interval: 3
+
+report:
+  mode: "daily"
+  template: null
+  custom_template_path: ""
+  time_range: "24h"
+
+schedule:
+  enabled: false
+  preset: ""
+
+display:
+  region_order:
+    - hotlist
+    - ai_analysis
+    - rss
+  regions:
+    hotlist: true
+    new_items: false
+    rss: true
+    standalone: false
+    ai_analysis: true

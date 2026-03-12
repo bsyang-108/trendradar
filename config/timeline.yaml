@@ -1,0 +1,76 @@
+# TrendRadar Timeline 完整配置
+
+presets:
+  always_on:
+    default:
+      collect: true
+      push: true
+      analyze: true
+      report_mode: daily
+      ai_mode: current
+    periods:
+      all_day:
+        name: 全天
+        start: "00:00"
+        end: "23:59"
+    day_plans:
+      default:
+        periods: [all_day]
+    week_map:
+      1: default
+      2: default
+      3: default
+      4: default
+      5: default
+      6: default
+      7: default
+
+custom:
+  default:
+    collect: true
+    push: true
+    analyze: true
+    report_mode: daily
+    ai_mode: current
+  periods:
+    all_day:
+      name: 全天
+      start: "00:01"
+      end: "23:58"
+  day_plans:
+    default:
+      periods: [all_day]
+  week_map:
+    1: default
+    2: default
+    3: default
+    4: default
+    5: default
+    6: default
+    7: default
+
+default:
+  collect: true
+  push: true
+  analyze: true
+  report_mode: daily
+  ai_mode: current
+
+periods:
+  all_day:
+    name: 全天
+    start: "00:01"
+    end: "23:58"
+
+day_plans:
+  default:
+    periods: [all_day]
+
+week_map:
+  1: default
+  2: default
+  3: default
+  4: default
+  5: default
+  6: default
+  7: default

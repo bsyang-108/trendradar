@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI技术热点新闻</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+        }
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+        }
+        .save-buttons {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+        }
+        .save-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .save-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .header-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+        }
+        .header-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        .info-item {
+            text-align: center;
+        }
+        .info-label {
+            display: block;
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+        }
+        .info-value {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .content {
+            padding: 24px;
+        }
+        /* AI 分析区块样式 */
+        .ai-section {
+            padding: 24px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            border: 1px solid #bae6fd;
+            margin-bottom: 24px;
+        }
+        .ai-section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .ai-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0369a1;
+        }
+        .ai-section-badge {
+            background: #0ea5e9;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        .ai-block {
+            margin-bottom: 16px;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .ai-block:last-child {
+            margin-bottom: 0;
+        }
+        .ai-block-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0369a1;
+            margin-bottom: 8px;
+        }
+        .ai-block-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #334155;
+            white-space: pre-wrap;
+        }
+        /* 新闻列表 */
+        .word-group {
+            margin-bottom: 40px;
+        }
+        .word-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .word-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .word-count {
+            color: #666;
+            font-size: 13px;
+        }
+        .word-count.hot { color: #dc2626; font-weight: 600; }
+        .news-item {
+            margin-bottom: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        .source-name { color: #666; font-size: 12px; }
+        .rank-num {
+            color: #fff;
+            background: #6b7280;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        .rank-num.top { background: #dc2626; }
+        .rank-num.high { background: #ea580c; }
+        .time-info { color: #999; font-size: 11px; }
+        .count-info { color: #059669; font-size: 11px; font-weight: 500; }
+        .news-title {
+            font-size: 15px;
+            line-height: 1.4;
+            color: #1a1a1a;
+        }
+        .news-link {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .news-link:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            margin-top: 32px;
+            padding: 20px 24px;
+            background: #f8f9fa;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 13px;
+            color: #6b7280;
+        }
+        .footer a {
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .header { padding: 24px 20px; }
+            .header-info { grid-template-columns: 1fr; gap: 12px; }
+            .save-buttons { position: static; margin-bottom: 16px; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="save-buttons">
+                <button class="save-btn" onclick="saveAsImage()">保存为图片</button>
+            </div>
+            <div class="header-title">AI技术热点新闻</div>
+            <div class="header-info" id="header-info">
+                <div class="info-item">
+                    <span class="info-label">报告类型</span>
+                    <span class="info-value" id="report-type">加载中...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">新闻总数</span>
+                    <span class="info-value" id="news-count">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">热点新闻</span>
+                    <span class="info-value" id="hot-count">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">生成时间</span>
+                    <span class="info-value" id="gen-time">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- AI热点分析模块 -->
+            <div class="ai-section" id="ai-section">
+                <div class="ai-section-header">
+                    <div class="ai-section-title">热点新闻分析</div>
+                    <span class="ai-section-badge">AI</span>
+                </div>
+                <div id="ai-content">
+                    <div class="ai-block">
+                        <div class="ai-block-title">核心热点态势</div>
+                        <div class="ai-block-content" id="core-trends">加载中...</div>
+                    </div>
+                    <div class="ai-block">
+                        <div class="ai-block-title">舆论风向与争议</div>
+                        <div class="ai-block-content" id="sentiment">-</div>
+                    </div>
+                    <div class="ai-block">
+                        <div class="ai-block-title">异动与弱信号</div>
+                        <div class="ai-block-content" id="signals">-</div>
+                    </div>
+                    <div class="ai-block">
+                        <div class="ai-block-title">研判与建议</div>
+                        <div class="ai-block-content" id="outlook">-</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 新闻列表 -->
+            <div id="news-content">
+                加载中...
+            </div>
+        </div>
+        
+        <div class="footer">
+            由 <strong>TrendRadar</strong> 生成 ·
+            <a href="https://github.com/sansan0/TrendRadar" target="_blank">GitHub</a>
+        </div>
+    </div>
+
+    <script>
+        // 从TrendRadar原始页面提取数据并重新渲染
+        async function loadNews() {
+            try {
+                // 获取原始TrendRadar页面
+                const response = await fetch('/trendradar/');
+                const html = await response.text();
+                
+                // 解析HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // 提取头部信息
+                const headerInfo = doc.querySelector('.header-info');
+                if (headerInfo) {
+                    const items = headerInfo.querySelectorAll('.info-value');
+                    if (items.length >= 4) {
+                        document.getElementById('report-type').textContent = items[0].textContent;
+                        document.getElementById('news-count').textContent = items[1].textContent;
+                        document.getElementById('hot-count').textContent = items[2].textContent;
+                        document.getElementById('gen-time').textContent = items[3].textContent;
+                    }
+                }
+                
+                // 提取AI分析内容
+                const aiSection = doc.querySelector('.ai-section');
+                if (aiSection) {
+                    const blocks = aiSection.querySelectorAll('.ai-block');
+                    blocks.forEach((block, index) => {
+                        const title = block.querySelector('.ai-block-title');
+                        const content = block.querySelector('.ai-block-content');
+                        if (title && content) {
+                            const titleText = title.textContent.trim();
+                            if (titleText.includes('核心热点')) {
+                                document.getElementById('core-trends').textContent = content.textContent.trim();
+                            } else if (titleText.includes('舆论')) {
+                                document.getElementById('sentiment').textContent = content.textContent.trim() || '-';
+                            } else if (titleText.includes('异动') || titleText.includes('信号')) {
+                                document.getElementById('signals').textContent = content.textContent.trim() || '-';
+                            } else if (titleText.includes('研判') || titleText.includes('建议')) {
+                                document.getElementById('outlook').textContent = content.textContent.trim() || '-';
+                            }
+                        }
+                    });
+                }
+                
+                // 提取新闻列表
+                const hotlistSection = doc.querySelector('.hotlist-section');
+                if (hotlistSection) {
+                    document.getElementById('news-content').innerHTML = hotlistSection.innerHTML;
+                } else {
+                    document.getElementById('news-content').innerHTML = '<p>暂无新闻数据</p>';
+                }
+                
+            } catch (error) {
+                console.error('加载失败:', error);
+                document.getElementById('news-content').innerHTML = '<p style="color:red;">加载失败，请刷新重试</p>';
+            }
+        }
+        
+        // 保存为图片
+        async function saveAsImage() {
+            const button = event.target;
+            button.textContent = '生成中...';
+            button.disabled = true;
+            
+            try {
+                const container = document.querySelector('.container');
+                const canvas = await html2canvas(container, {
+                    backgroundColor: '#ffffff',
+                    scale: 1.5
+                });
+                
+                const link = document.createElement('a');
+                const now = new Date();
+                link.download = `AI技术热点_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                button.textContent = '保存成功!';
+                setTimeout(() => {
+                    button.textContent = '保存为图片';
+                    button.disabled = false;
+                }, 2000);
+            } catch (error) {
+                button.textContent = '保存失败';
+                setTimeout(() => {
+                    button.textContent = '保存为图片';
+                    button.disabled = false;
+                }, 2000);
+            }
+        }
+        
+        // 页面加载完成后执行
+        loadNews();
+    </script>
+</body>
+</html>
